@@ -29,11 +29,11 @@ nav ul li {
 }
 
 nav ul li a {
-  color: #000;
+  color: #3a3a38;
   text-decoration: none;
 }
 nav ul li a:hover {
-  color: #ababab;
+  color: #3a3a38;
 }
 
 /* about me */
@@ -41,7 +41,7 @@ nav ul li a:hover {
 #welcome-section {
   top: 20;
   line-height: 1.6;
-  background: #F5F5F5;
+  background: #3a3a38;
   min-height: 55vh;
   padding-top: 45vh;
   text-align:
