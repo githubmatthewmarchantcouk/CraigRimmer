@@ -240,6 +240,17 @@ table, td, th {
 }
 </style>
 </head>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+        if (!window.coBrowsingInstance) {
+            console.error("coBrowsingInstance not initialized");
+        }
+    }, 2000);
+});
+</script>	
+	
 <body>
 
 <button class="open-button" onclick="openForm()">Request a Callback</button>
