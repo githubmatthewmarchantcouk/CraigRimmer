@@ -157,11 +157,23 @@
         var url = new URL("https://cloud8-cc-geo.8x8.com/vcc-chat-channels/public/webchat/discovery");
         var params = { domain: config.domain, tenant: config.tenant, channelUuid: config.channelUuid };
         url.search = new URLSearchParams(params).toString();
-        fetch(url)
-            .then(response => response.json())
-            .then(data => config.domain = !data.domain ? config.domain : data.domain)
-            .catch(error => console.warn('Failed to retrieve override domain, will continue using ', config.domain, error))
-            .finally(() => loadChat());
+        
+        function loadScript(url, callback) {
+            var script = document.createElement('script');
+            script.src = url;
+            script.async = true;
+            script.onload = callback;
+            script.onerror = function() { console.warn('Failed to load script', url); };
+            document.head.appendChild(script);
+        }
+
+        loadScript(url, function() {
+            fetch(url)
+                .then(response => response.json())
+                .then(data => config.domain = !data.domain ? config.domain : data.domain)
+                .catch(error => console.warn('Failed to retrieve override domain, will continue using ', config.domain, error))
+                .finally(() => loadChat());
+        });
 
         function loadChat() {
             var se = document.createElement("script");
@@ -173,7 +185,7 @@
             function handleInitEvent(e) {
                 var initFn = e.detail.init;
                 initFn(config, cb);
-                se.removeEventListener('init', handleInitEvent)
+                se.removeEventListener('init', handleInitEvent);
             }
             function handleErrorEvent(e) {
                 ef && ef(e);
