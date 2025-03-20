@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Craigs 8x8 Demo</title>
+    <title>Craig's 8x8 Demo</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,6 +44,41 @@
     </style>
 </head>
 <body>
+    <!-- Co-browsing scripts load first -->
+    <script>
+        window.CoBrowsingCustomStrings = {
+            "popup-title": "Craig's Co-browsing",
+            "popup-close": "X",
+            "popup-start-information": "Please Click Start to initialize the Co-browsing session and pass the session ID below to the Agent.",
+            "popup-sync-information": "You may have open another page that is currently being synchronized. Click Synchronize to synchronize this page instead.",
+            "popup-session-id-label": "Session ID: ",
+            "popup-start-button": "Start",
+            "popup-stop-button": "Stop",
+            "popup-sync-button": "Synchronize",
+            "popup-status-label": "Status: ",
+            "status-connecting": "Connecting...",
+            "status-ready": "Connected",
+            "status-connected": "Connected",
+            "status-replica-disconnected": "Waiting for agent to connect.",
+            "status-disconnected": "Disconnected",
+            "status-sync-required": "Synchronization required",
+            "status-invalid-license": "Invalid license",
+            "status-limited-license": "All agents are busy, please try again later",
+            "status-invalid-domain-for-license": "Invalid domain for license",
+            "status-disabled-license": "Disabled license"
+        };
+
+        (function(e,i,g,h,t,c,o,b,r,w){
+            r=i.createElement(g);r.setAttribute(h,c);
+            o&&Object.keys(o).map(function(k){r.setAttribute(k,o[k])});
+            r.async=1;r.src='https://'+t+'/license'+c+'/dist/primary-bundle.js';
+            w=i.getElementsByTagName(g)[0];w.parentNode.insertBefore(r,w);
+        })(window,document,'script','data-8x8-co-browsing','cb.8x8.com','67d9cdab4333f7004d23c32f',{
+            'data-8x8-co-browsing-multi-domain': true,
+            'data-8x8-co-browsing-mode':'<Co-browse-mode>'
+        });
+    </script>
+
     <!-- 8x8 Chat Button Script -->
     <script type="text/javascript">
         (function(c, f, ef) {
@@ -154,39 +189,6 @@
         window.onload = function() {
             let chatButton = document.getElementById("__8x8-chat-button-container-script_142418536967daddd3139067.73299394");
             makeDraggable(chatButton);
-
-            // Co-browsing scripts
-            window.CoBrowsingCustomStrings = {
-                "popup-title": "Craig's Co-browsing",
-                "popup-close": "X",
-                "popup-start-information": "Please Click Start to initialize the Co-browsing session and pass the session ID below to the Agent.",
-                "popup-sync-information": "You may have open another page that is currently being synchronized. Click Synchronize to synchronize this page instead.",
-                "popup-session-id-label": "Session ID: ",
-                "popup-start-button": "Start",
-                "popup-stop-button": "Stop",
-                "popup-sync-button": "Synchronize",
-                "popup-status-label": "Status: ",
-                "status-connecting": "Connecting...",
-                "status-ready": "Connected",
-                "status-connected": "Connected",
-                "status-replica-disconnected": "Waiting for agent to connect.",
-                "status-disconnected": "Disconnected",
-                "status-sync-required": "Synchronization required",
-                "status-invalid-license": "Invalid license",
-                "status-limited-license": "All agents are busy, please try again later",
-                "status-invalid-domain-for-license": "Invalid domain for license",
-                "status-disabled-license": "Disabled license"
-            };
-
-            (function(e,i,g,h,t,c,o,b,r,w){
-                r=i.createElement(g);r.setAttribute(h,c);
-                o&&Object.keys(o).map(function(k){r.setAttribute(k,o[k])});
-                r.async=1;r.src='https://'+t+'/license'+c+'/dist/primary-bundle.js';
-                w=i.getElementsByTagName(g)[0];w.parentNode.insertBefore(r,w);
-            })(window,document,'script','data-8x8-co-browsing','cb.8x8.com','67d9cdab4333f7004d23c32f',{
-                'data-8x8-co-browsing-multi-domain': true,
-                'data-8x8-co-browsing-mode':'<Co-browse-mode>'
-            });
         };
     </script>
 </body>
