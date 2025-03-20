@@ -29,6 +29,7 @@
             top: 10px;
             left: 10px;
             z-index: 10;
+            cursor: grab;
         }
     </style>
 </head>
@@ -51,6 +52,36 @@
             }
             document.getElementById('webFrame').src = url;
         }
+
+        // Drag functionality for the chat button
+        function makeDraggable(element) {
+            let offsetX, offsetY, isDragging = false;
+
+            element.addEventListener("mousedown", function(event) {
+                isDragging = true;
+                offsetX = event.clientX - element.getBoundingClientRect().left;
+                offsetY = event.clientY - element.getBoundingClientRect().top;
+                element.style.cursor = "grabbing";
+            });
+
+            document.addEventListener("mousemove", function(event) {
+                if (isDragging) {
+                    element.style.left = (event.clientX - offsetX) + "px";
+                    element.style.top = (event.clientY - offsetY) + "px";
+                }
+            });
+
+            document.addEventListener("mouseup", function() {
+                isDragging = false;
+                element.style.cursor = "grab";
+            });
+        }
+
+        // Wait for the page to load and apply draggable functionality
+        window.onload = function() {
+            let chatButton = document.getElementById("__8x8-chat-button-container-script_142418536967daddd3139067.73299394");
+            makeDraggable(chatButton);
+        };
     </script>
 
     <!-- 8x8 Chat Button Script -->
