@@ -56,6 +56,20 @@
         .help-link:hover {
             background-color: rgba(0, 0, 0, 0.9);
         }
+        /* Style for the draggable chat button */
+        #__8x8-chat-button-container-script_142418536967daddd3139067 {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            cursor: move;
+            z-index: 1000;
+            background-color: #0078d4;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -81,38 +95,81 @@
     })(window,document,'script','data-8x8-co-browsing','cb.8x8.com','67d9cdab4333f7004d23c32f','data-8x8-co-browsing-mode','full-control');
 </script>
 
-<script>
-    const dropArea = document.getElementById('drop-area');
-    const uploadedImage = document.getElementById('uploaded-image');
+<!-- Script for the chat button -->
+<script type="text/javascript">
+(function(c, f, ef){
+    var typeofC = Object.prototype.toString.call(c);
+    var props = (typeofC === '[object Object]' && c) || {};
+    var cb = f || (typeofC === '[object Function]' && c);
+    var config = {
+        scriptUuid: "script_142418536967daddd3139067.73299394",
+        tenant: "Y3JhaWdyaW1tZXI4eDhkZW0wMQ",
+        channelName: "Craigs Chat",
+        channelUuid: "1Ky1MRnvTG2qV7Cj71dN7A",
+        domain: "https://vcc-eu6.8x8.com",
+        buttonContainerId: "__8x8-chat-button-container-script_142418536967daddd3139067.73299394",
+        align: "right",
+    };
 
-    // Handle drag over
-    dropArea.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropArea.classList.add('hover');
-    });
+    var url = new URL("https://cloud8-cc-geo.8x8.com/vcc-chat-channels/public/webchat/discovery");
+    var params = { domain: config.domain, tenant: config.tenant, channelUuid: config.channelUuid };
+    url.search = new URLSearchParams(params).toString();
+    fetch(url)
+        .then(response => response.json())
+        .then(data => config.domain = !data.domain ? config.domain : data.domain)
+        .catch(error => console.warn('Failed to retrieve override domain, will continue using ', config.domain, error))
+        .finally(() => loadChat());
 
-    // Handle drag leave
-    dropArea.addEventListener('dragleave', () => {
-        dropArea.classList.remove('hover');
-    });
-
-    // Handle drop
-    dropArea.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropArea.classList.remove('hover');
-        dropArea.style.display = 'none'; // Hide drop area after image is dropped
-
-        const file = e.dataTransfer.files[0];
-        if (file && file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                uploadedImage.src = event.target.result;
-                uploadedImage.style.display = 'block'; // Make sure the image is shown
-            };
-            reader.readAsDataURL(file);
-        } else {
-            alert('Please drop an image file');
+    function loadChat() {
+        var se = document.createElement("script");
+        se.type = "text/javascript";
+        se.async = true;
+        se.src = props.loaderURL || (config.domain + "/CHAT/common/js/chatv3.js");
+        Object.keys(config).forEach(function (k) { se.dataset[k] = config[k] });
+        Object.keys(props).forEach(function (k) { se.dataset[k] = props[k] });
+        function handleInitEvent(e) {
+            var initFn = e.detail.init;
+            initFn(config, cb);
+            se.removeEventListener('init', handleInitEvent)
         }
+        function handleErrorEvent(e) {
+            ef && ef(e);
+            se.removeEventListener('customerror', handleErrorEvent);
+        }
+        se.addEventListener('init', handleInitEvent);
+        se.addEventListener('customerror', handleErrorEvent);
+        var os = document.getElementsByTagName("script")[0];
+        os.parentNode.insertBefore(se, os);
+    }
+})();
+</script>
+
+<!-- Draggable button functionality -->
+<script>
+    const chatButton = document.getElementById('__8x8-chat-button-container-script_142418536967daddd3139067');
+
+    let isDragging = false;
+    let offsetX, offsetY;
+
+    chatButton.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        offsetX = e.clientX - chatButton.getBoundingClientRect().left;
+        offsetY = e.clientY - chatButton.getBoundingClientRect().top;
+        document.body.style.userSelect = 'none'; // Prevent text selection while dragging
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            const x = e.clientX - offsetX;
+            const y = e.clientY - offsetY;
+            chatButton.style.left = `${x}px`;
+            chatButton.style.top = `${y}px`;
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+        document.body.style.userSelect = ''; // Re-enable text selection
     });
 </script>
 
