@@ -3,219 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8x8 Craig's Demo</title>
+    <title>Web Page Viewer</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #3a3a38;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 1.2em;
-            color: #3a3a38;
+            margin: 20px;
         }
-        .top-border {
-            width: 100%;
-            height: 100px;
-            background-color: #3a3a38;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-left: 10px;
-            position: relative;
-        }
-        .top-border img {
-            height: 100px;
-        }
-        .left-container {
-            margin-top: 20px;
-        }
-        .image-container {
-            margin-top: 20px;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-        #__8x8-chat-button-container-script_142418536967daddd3139067.73299394 {
-            position: absolute;
-            left: 10px;
-            top: 10px;
-            z-index: 10;
-        }
-        * {
-            box-sizing: border-box;
-        }
-        .open-button {
-            background-color: #555;
-            color: white;
-            padding: 16px 20px;
-            border: none;
-            cursor: pointer;
-            opacity: 0.8;
-            position: fixed;
-            bottom: 23px;
-            right: 28px;
-            width: 245px;
-            border-radius: 10px;
-        }
-        .form-popup {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            right: 15px;
-            border: 3px solid #f1f1f1;
-            z-index: 9;
-            background-color: white;
-            color: #3a3a38;
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        .form-container {
-            max-width: 300px;
+        input {
+            width: 60%;
             padding: 10px;
-            background-color: white;
-            color: #3a3a38;
-            border-radius: 10px;
+            margin: 10px 0;
         }
-        .form-container input[type=text], 
-        .form-container input[type=password] {
-            width: 100%;
-            padding: 15px;
-            margin: 5px 0 22px 0;
-            border: none;
-            background: #f1f1f1;
-            color: #3a3a38;
-            border-radius: 8px;
-        }
-        .form-container .btn {
-            background-color: #04AA6D;
-            color: white;
-            padding: 16px 20px;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            margin-bottom: 10px;
-            opacity: 0.8;
-            border-radius: 8px;
-        }
-        .form-container .cancel {
-            background-color: #90bcb4;
-        }
-        .form-container .btn:hover, .open-button:hover {
-            opacity: 1;
-        }
-        table, td, th {
-            color: #3a3a38;
+        iframe {
+            width: 80%;
+            height: 500px;
+            border: 1px solid #ccc;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-
-    <script type="text/javascript">
-    (function (c, f, ef) {
-        var typeofC = Object.prototype.toString.call(c);
-        var props = (typeofC === '[object Object]' && c) || {};
-        var cb = f || (typeofC === '[object Function]' && c);
-        var config = {
-            scriptUuid: "script_142418536967daddd3139067.73299394",
-            tenant: "Y3JhaWdyaW1tZXI4eDhkZW0wMQ",
-            channelName: "Craigs Chat",
-            channelUuid: "1Ky1MRnvTG2qV7Cj71dN7A",
-            domain: "https://vcc-eu6.8x8.com",
-            buttonContainerId: "__8x8-chat-button-container-script_142418536967daddd3139067.73299394",
-            align: "right",
-        };
-
-        var url = new URL("https://cloud8-cc-geo.8x8.com/vcc-chat-channels/public/webchat/discovery");
-        var params = { domain: config.domain, tenant: config.tenant, channelUuid: config.channelUuid };
-        url.search = new URLSearchParams(params).toString();
-
-        function checkDependencies(callback, attempts = 5) {
-            var dependenciesLoaded = typeof fetch !== 'undefined' &&
-                                     typeof Promise !== 'undefined' &&
-                                     typeof document.createElement !== 'undefined';
-
-            if (dependenciesLoaded) {
-                callback();
-            } else if (attempts > 0) {
-                console.warn("Dependencies not ready. Retrying in 1 second...");
-                setTimeout(() => checkDependencies(callback, attempts - 1), 1000);
-            } else {
-                console.error("Dependencies not available. Chat may not function properly.");
-            }
-        }
-
-        function loadScript(url, callback) {
-            var script = document.createElement('script');
-            script.src = url;
-            script.async = true;
-            script.onload = callback;
-            script.onerror = function () { console.warn('Failed to load script', url); };
-            document.head.appendChild(script);
-        }
-
-        checkDependencies(() => {
-            loadScript(url, function () {
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => config.domain = !data.domain ? config.domain : data.domain)
-                    .catch(error => console.warn('Failed to retrieve override domain, will continue using ', config.domain, error))
-                    .finally(() => loadChat());
-            });
-        });
-
-        function loadChat() {
-            var se = document.createElement("script");
-            se.type = "text/javascript";
-            se.async = true;
-            se.src = props.loaderURL || (config.domain + "/CHAT/common/js/chatv3.js");
-            Object.keys(config).forEach(function (k) { se.dataset[k] = config[k] });
-            Object.keys(props).forEach(function (k) { se.dataset[k] = props[k] });
-
-            function handleInitEvent(e) {
-                var initFn = e.detail.init;
-                initFn(config, cb);
-                se.removeEventListener('init', handleInitEvent);
-            }
-
-            function handleErrorEvent(e) {
-                ef && ef(e);
-                se.removeEventListener('customerror', handleErrorEvent);
-            }
-
-            se.addEventListener('init', handleInitEvent);
-            se.addEventListener('customerror', handleErrorEvent);
-            var os = document.getElementsByTagName("script")[0];
-            os.parentNode.insertBefore(se, os);
-        }
-    })();
-    </script>
-
-    <div class="top-border">
-        <div class="left-container">
-            <img src="toplhlogo.png" alt="Logo">
-        </div>
-        <div id="__8x8-chat-button-container-script_142418536967daddd3139067.73299394"></div>
-    </div>
-
-    <div class="image-container">
-        <img src="Pic2.PNG" alt="Pic2">
-        <img src="Pic3.PNG" alt="Pic3">
-    </div>
-
-    <button class="open-button" onclick="openForm()">Request a Callback</button>
-
+    <h2>Enter a URL to View</h2>
+    <input type="text" id="urlInput" placeholder="Enter URL (e.g., https://example.com)">
+    <button onclick="loadPage()">Load Page</button>
+    <br>
+    <iframe id="webFrame" src="" sandbox="allow-scripts allow-same-origin"></iframe>
+    
     <script>
-    function openForm() {
-        document.getElementById("myForm").style.display = "block";
-    }
-
-    function closeForm() {
-        document.getElementById("myForm").style.display = "none";
-    }
+        function loadPage() {
+            let url = document.getElementById('urlInput').value;
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+            }
+            document.getElementById('webFrame').src = url;
+        }
     </script>
-
 </body>
 </html>
