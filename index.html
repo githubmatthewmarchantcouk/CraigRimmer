@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Craigs 8x8 Demo</title>
+    <title>Craig's 8x8 Demo</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -34,16 +34,19 @@
             height: 1000px;
             border: 1px solid #ccc;
         }
-        .chat-button-container {
+        .chat-button-container, .co-browse-button-container {
             position: absolute;
-            top: 10px;
-            left: 10px;
             z-index: 10;
             cursor: grab;
+        }
+        .co-browse-button-container {
+            top: 10px;
+            right: 10px;
         }
     </style>
 </head>
 <body>
+    <h2>Enter a URL</h2>
     
     <div class="input-container">
         <input type="text" id="urlInput" placeholder="Enter URL (e.g., https://example.com)">
@@ -53,6 +56,13 @@
     <div class="iframe-container">
         <div id="__8x8-chat-button-container-script_142418536967daddd3139067.73299394" class="chat-button-container"></div>
         <iframe id="webFrame" src="" sandbox="allow-scripts allow-same-origin"></iframe>
+
+        <!-- Co-browse button -->
+        <div id="coBrowseButton" class="co-browse-button-container" style="display:none;">
+            <a href="#" onclick="window.coBrowsingInstance && coBrowsingInstance.showPopup();return false;">
+                <img src="co-browse.gif" alt="Co-Browse">
+            </a>
+        </div>
     </div>
 
     <script>
@@ -64,7 +74,7 @@
             document.getElementById('webFrame').src = url;
         }
 
-        // Drag functionality for the chat button
+        // Drag functionality for the chat button and co-browse button
         function makeDraggable(element) {
             let offsetX, offsetY, isDragging = false;
 
@@ -91,9 +101,15 @@
         // Wait for the page to load and apply draggable functionality
         window.onload = function() {
             let chatButton = document.getElementById("__8x8-chat-button-container-script_142418536967daddd3139067.73299394");
-            makeDraggable(chatButton);
+            let coBrowseButton = document.getElementById("coBrowseButton");
 
-            // Wait for the page to load before executing the 8x8 script
+            makeDraggable(chatButton);
+            makeDraggable(coBrowseButton);
+
+            // Show the co-browse button after page load
+            coBrowseButton.style.display = "block";
+
+            // Initialize the 8x8 Co-browsing functionality
             (function(e, i, g, h, t, c, o, b, r, w) {
                 r = i.createElement(g);
                 r.setAttribute(h, c);
