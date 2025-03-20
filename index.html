@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Craigs 8x8 Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .input-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        input {
+            width: 60%;
+            padding: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        .iframe-container {
+            position: relative;
+            width: 100%;
+        }
+        iframe {
+            width: 100%;
+            height: 1000px;
+            border: 1px solid #ccc;
+        }
+        .chat-button-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+            cursor: grab;
+        }
+    </style>
+</head>
+<body>
+    <h2>Enter a URL</h2>
+    
+    <div class="input-container">
+        <input type="text" id="urlInput" placeholder="Enter URL (e.g., https://example.com)">
+        <button onclick="loadPage()">Load Page</button>
+    </div>
+
+    <div class="iframe-container">
+        <div id="__8x8-chat-button-container-script_142418536967daddd3139067.73299394" class="chat-button-container"></div>
+        <iframe id="webFrame" src="" sandbox="allow-scripts allow-same-origin"></iframe>
+    </div>
+
+    <script>
+        function loadPage() {
+            let url = document.getElementById('urlInput').value;
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+            }
+            document.getElementById('webFrame').src = url;
+        }
+
+        // Drag functionality for the chat button
+        function makeDraggable(element) {
+            let offsetX, offsetY, isDragging = false;
+
+            element.addEventListener("mousedown", function(event) {
+                isDragging = true;
+                offsetX = event.clientX - element.getBoundingClientRect().left;
+                offsetY = event.clientY - element.getBoundingClientRect().top;
+                element.style.cursor = "grabbing";
+            });
+
+            document.addEventListener("mousemove", function(event) {
+                if (isDragging) {
+                    element.style.left = (event.clientX - offsetX) + "px";
+                    element.style.top = (event.clientY - offsetY) + "px";
+                }
+            });
+
+            document.addEventListener("mouseup", function() {
+                isDragging = false;
+                element.style.cursor = "grab";
+            });
+        }
+
+        // Wait for the page to load and apply draggable functionality
+        window.onload = function() {
+            let chatButton = document.getElementById("__8x8-chat-button-container-script_142418536967daddd3139067.73299394");
+            makeDraggable(chatButton);
+
+            // Wait for the page to load before executing the 8x8 script
+            (function(e, i, g, h, t, c, o, b, r, w) {
+                r = i.createElement(g);
+                r.setAttribute(h, c);
+                
+                if (o) {
+                    Object.keys(o).map(function(k) {
+                        r.setAttribute(k, o[k]);
+                    });
+                }
+
+                r.async = 1;
+                r.src = 'https://' + t + '/license' + c + '/dist/primary-bundle.js';
+
+                w = i.getElementsByTagName(g)[0];
+                w.parentNode.insertBefore(r, w);
+
+            })(window, document, 'script', 'data-8x8-co-browsing', 'cb.8x8.com', '67d9cdab4333f7004d23c32f', {
+                'data-8x8-co-browsing-multi-domain': true,
+                'data-8x8-co-browsing-mode': '<Co-browse-mode>'
+            });
+        };
+    </script>
+
+    <!-- 8x8 Chat Button Script -->
+    <script type="text/javascript">
+        (function(c, f, ef){
+            var typeofC = Object.prototype.toString.call(c);
+            var props = (typeofC === '[object Object]' && c) || {};
+            var cb = f || (typeofC === '[object Function]' && c);
+            var config = {
+                scriptUuid: "script_142418536967daddd3139067.73299394",
+                tenant: "Y3JhaWdyaW1tZXI4eDhkZW0wMQ",
+                channelName: "Craigs Chat",
+                channelUuid: "1Ky1MRnvTG2qV7Cj71dN7A",
+                domain: "https://vcc-eu6.8x8.com",
+                buttonContainerId: "__8x8-chat-button-container-script_142418536967daddd3139067.73299394",
+                align: "right",
+            };
+
+            var url = new URL("https://cloud8-cc-geo.8x8.com/vcc-chat-channels/public/webchat/discovery");
+            var params = { domain: config.domain, tenant: config.tenant, channelUuid: config.channelUuid };
+            url.search = new URLSearchParams(params).toString();
+            fetch(url)
+                .then(response => response.json())
+                .then(data => config.domain = !data.domain ? config.domain : data.domain)
+                .catch(error => console.warn('Failed to retrieve override domain, will continue using ', config.domain, error))
+                .finally(() => loadChat());
+
+            function loadChat() {
+                var se = document.createElement("script");
+                se.type = "text/javascript";
+                se.async = true;
+                se.src = props.loaderURL || (config.domain + "/CHAT/common/js/chatv3.js");
+                Object.keys(config).forEach(function (k) { se.dataset[k] = config[k] });
+                Object.keys(props).forEach(function (k) { se.dataset[k] = props[k] });
+                function handleInitEvent(e) {
+                    var initFn = e.detail.init;
+                    initFn(config, cb);
+                    se.removeEventListener('init', handleInitEvent)
+                }
+                function handleErrorEvent(e) {
+                    ef && ef(e);
+                    se.removeEventListener('customerror', handleErrorEvent);
+                }
+                se.addEventListener('init', handleInitEvent);
+                se.addEventListener('customerror', handleErrorEvent);
+                var os = document.getElementsByTagName("script")[0];
+                os.parentNode.insertBefore(se, os);
+            }
+        })();
+    </script>
+</body>
+</html>
