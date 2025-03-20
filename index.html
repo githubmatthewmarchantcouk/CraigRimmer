@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Craigs 8x8 Demo</title>
+    <title>Craig's 8x8 Demo</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,6 +41,14 @@
             z-index: 10;
             cursor: grab;
         }
+        .help-link {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #007BFF;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -51,7 +59,8 @@
     </div>
 
     <div class="iframe-container">
-        <div id="__8x8-chat-button-container-script_142418536967daddd3139067.73299394" class="chat-button-container"></div>
+        <!-- Updated chat button container with a unique ID -->
+        <div id="chat-button-container-unique" class="chat-button-container"></div>
         <iframe id="webFrame" src="" sandbox="allow-scripts allow-same-origin"></iframe>
     </div>
 
@@ -64,33 +73,57 @@
             document.getElementById('webFrame').src = url;
         }
 
-        // Drag functionality for the chat button
-        function makeDraggable(element) {
-            let offsetX, offsetY, isDragging = false;
-
-            element.addEventListener("mousedown", function(event) {
-                isDragging = true;
-                offsetX = event.clientX - element.getBoundingClientRect().left;
-                offsetY = event.clientY - element.getBoundingClientRect().top;
-                element.style.cursor = "grabbing";
-            });
-
-            document.addEventListener("mousemove", function(event) {
-                if (isDragging) {
-                    element.style.left = (event.clientX - offsetX) + "px";
-                    element.style.top = (event.clientY - offsetY) + "px";
-                }
-            });
-
-            document.addEventListener("mouseup", function() {
-                isDragging = false;
-                element.style.cursor = "grab";
-            });
-        }
-
         // Wait for the page to load and apply draggable functionality
         window.onload = function() {
-            let chatButton = document.getElementById("__8x8-chat-button-container-script_142418536967daddd3139067.73299394");
+            // Help Link with a unique class
+            const helpLink = document.createElement('a');
+            helpLink.href = '#';
+            helpLink.className = 'help-link';
+            helpLink.textContent = 'Help';
+            helpLink.onclick = function () {
+                if (window.coBrowsingInstance) {
+                    window.coBrowsingInstance.showPopup();
+                }
+                return false;
+            };
+            document.body.appendChild(helpLink);
+
+            // Co-Browsing Script
+            (function(e,i,g,h,t,c,o,b,r,w){
+                r=i.createElement(g);
+                r.setAttribute(h,c);
+                o&&r.setAttribute(o,b);
+                r.async=1;
+                r.src='https://'+t+'/license'+c+'/dist/primary-bundle.js';
+                w=i.getElementsByTagName(g)[0];
+                w.parentNode.insertBefore(r,w);
+            })(window,document,'script','data-8x8-co-browsing','cb.8x8.com','67d9cdab4333f7004d23c32f','data-8x8-co-browsing-mode','full-control');
+
+            // Drag functionality for the chat button
+            function makeDraggable(element) {
+                let offsetX, offsetY, isDragging = false;
+
+                element.addEventListener("mousedown", function(event) {
+                    isDragging = true;
+                    offsetX = event.clientX - element.getBoundingClientRect().left;
+                    offsetY = event.clientY - element.getBoundingClientRect().top;
+                    element.style.cursor = "grabbing";
+                });
+
+                document.addEventListener("mousemove", function(event) {
+                    if (isDragging) {
+                        element.style.left = (event.clientX - offsetX) + "px";
+                        element.style.top = (event.clientY - offsetY) + "px";
+                    }
+                });
+
+                document.addEventListener("mouseup", function() {
+                    isDragging = false;
+                    element.style.cursor = "grab";
+                });
+            }
+
+            let chatButton = document.getElementById("chat-button-container-unique");
             makeDraggable(chatButton);
         };
     </script>
@@ -107,7 +140,8 @@
                 channelName: "Craigs Chat",
                 channelUuid: "1Ky1MRnvTG2qV7Cj71dN7A",
                 domain: "https://vcc-eu6.8x8.com",
-                buttonContainerId: "__8x8-chat-button-container-script_142418536967daddd3139067.73299394",
+                // Updated buttonContainerId to unique value
+                buttonContainerId: "chat-button-container-unique",
                 align: "right",
             };
 
