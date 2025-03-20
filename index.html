@@ -10,6 +10,9 @@
             padding: 0;
             text-align: center;
             background-color: #3a3a38;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.2em;
+            color: #3a3a38;
         }
         .top-border {
             width: 100%;
@@ -41,11 +44,101 @@
             top: 10px;
             z-index: 10; /* Ensure it's on top of other content */
         }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Button used to open the contact form - fixed at the bottom of the page */
+        .open-button {
+            background-color: #555;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            opacity: 0.8;
+            position: fixed;
+            bottom: 23px;
+            right: 28px;
+            width: 245px;
+            border-radius: 10px; /* Rounded edges */
+        }
+
+        /* The popup form - hidden by default */
+        .form-popup {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            right: 15px;
+            border: 3px solid #f1f1f1;
+            z-index: 9;
+            background-color: white;
+            color: #3a3a38;
+            border-radius: 15px; /* Rounded edges for popup */
+            padding: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for effect */
+        }
+
+        /* Add styles to the form container */
+        .form-container {
+            max-width: 300px;
+            padding: 10px;
+            background-color: white;
+            color: #3a3a38;
+            border-radius: 10px; /* Rounded edges for form container */
+        }
+
+        /* Full-width input fields */
+        .form-container input[type=text], 
+        .form-container input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            border: none;
+            background: #f1f1f1;
+            color: #3a3a38;
+            border-radius: 8px; /* Rounded input fields */
+        }
+
+        /* When the inputs get focus, do something */
+        .form-container input[type=text]:focus, 
+        .form-container input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+            color: #3a3a38;
+        }
+
+        /* Set a style for the submit/login button */
+        .form-container .btn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            opacity: 0.8;
+            border-radius: 8px; /* Rounded buttons */
+        }
+
+        /* Add a red background color to the cancel button */
+        .form-container .cancel {
+            background-color: #90bcb4;
+        }
+
+        /* Add some hover effects to buttons */
+        .form-container .btn:hover, .open-button:hover {
+            opacity: 1;
+        }
+
+        /* Table text color */
+        table, td, th {
+            color: #3a3a38;
+        }
     </style>
 </head>
 <body>
-        <script>
-    <!-- This script will not interfere with the button layout, you just need to include it in the same page. It must also be within the <body> section of the page, preferably just before the ending tag. -->
+
     <script type="text/javascript">
     (function(c, f, ef){
         var typeofC = Object.prototype.toString.call(c);
@@ -93,200 +186,98 @@
         }
     })();
     </script>
-    
-<div class="top-border">
-    <div class="left-container">
-        <img src="toplhlogo.png" alt="Logo">
+
+    <div class="top-border">
+        <div class="left-container">
+            <img src="toplhlogo.png" alt="Logo">
+        </div>
+        <div id="__8x8-chat-button-container-script_142418536967daddd3139067.73299394"></div> <!-- Chat button div here -->
+        <a href="#" onclick="window.coBrowsingInstance && coBrowsingInstance.showPopup();return false;">
+            <img src="co-browse.gif" alt="Co-browse Icon" class="co-browse">
+        </a>
     </div>
-    <div id="__8x8-chat-button-container-script_142418536967daddd3139067.73299394"></div> <!-- Chat button div here -->
-    <a href="#" onclick="window.coBrowsingInstance && coBrowsingInstance.showPopup();return false;">
-        <img src="co-browse.gif" alt="Co-browse Icon" class="co-browse">
-    </a>
-</div>
-<div class="image-container">
-    <img src="Pic2.PNG" alt="Pic2">
-    <img src="Pic3.PNG" alt="Pic3">
-</div>
 
-<style>
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.2em;
-  color: #3a3a38;
-}
-* {
-  box-sizing: border-box;
-  color: #3a3a38;
-}
+    <div class="image-container">
+        <img src="Pic2.PNG" alt="Pic2">
+        <img src="Pic3.PNG" alt="Pic3">
+    </div>
 
-/* Button used to open the contact form - fixed at the bottom of the page */
-.open-button {
-  background-color: #555;
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  opacity: 0.8;
-  position: fixed;
-  bottom: 23px;
-  right: 28px;
-  width: 245px;
-  border-radius: 10px; /* Rounded edges */
-}
+    <button class="open-button" onclick="openForm()">Request a Callback</button>
 
-/* The popup form - hidden by default */
-.form-popup {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  right: 15px;
-  border: 3px solid #f1f1f1;
-  z-index: 9;
-  background-color: white;
-  color: #3a3a38;
-  border-radius: 15px; /* Rounded edges for popup */
-  padding: 15px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for effect */
-}
+    <div class="form-popup" id="myForm">
+        <form name="WebCallBack" action="https://vcc-eu6.8x8.com/SC/webcallback.php" method="get"  
+              oninput="extTransactionData.value = '[Name|' + fname.value +' '+ lname.value + '][Location|' + location.value + '][Reason|' + reason.value +']'">
+            <input type="hidden" name="extTransactionData"/>
+            <input type="hidden" name="tenant" value="craigrimmer8x8dem01"/>
+            <input type="hidden" name="token" value="a39944784f38c339c59502734034cd114606d337702c652bd0915ec1f6e2917a"/>
+            <input type="hidden" name="channel_number" value="441133236749"/>
+            <input type="hidden" name="callback_type" value="1"/>
+            <input type="hidden" name="queue_id" value="103"/>
+            <input type="hidden" name="expiration" value="1200"/><br/>
+            <table style="background-color:#FFFFFF;">
+                <tr><td>First name:</td><td> <input type="text" name="fname"/></td></tr>
+                <tr><td>Last name:</td><td><input type="text" name="lname" /></td></tr>
+                <tr><td>Location:</td><td><input type="text" name="location" /></td></tr>
+                <tr><td>Reason:</td><td>
+                    <select name="reason" style="border-radius: 8px; padding: 5px;">
+                        <option value="Sales Training">Sales Training</option>
+                        <option value="Technical Training">Technical Training</option>
+                        <option value="Information" selected>Information</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </td></tr>
+                <tr><td>Phone:</td><td><input type="tel" name="phone" class="anotherClass maskContent" /></td></tr>
+                <tr><td colspan="2" style="text-align:center"><input type="submit" value="Call Me" style="border-radius: 8px;"/></td></tr>
+            </table>
+        </form>
 
-/* Add styles to the form container */
-.form-container {
-  max-width: 300px;
-  padding: 10px;
-  background-color: white;
-  color: #3a3a38;
-  border-radius: 10px; /* Rounded edges for form container */
-}
+        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+    </div>
 
-/* Full-width input fields */
-.form-container input[type=text], 
-.form-container input[type=password] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  border: none;
-  background: #f1f1f1;
-  color: #3a3a38;
-  border-radius: 8px; /* Rounded input fields */
-}
+    <script>
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+    }
 
-/* When the inputs get focus, do something */
-.form-container input[type=text]:focus, 
-.form-container input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
-  color: #3a3a38;
-}
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
+    </script>
 
-/* Set a style for the submit/login button */
-.form-container .btn {
-  background-color: #04AA6D;
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  margin-bottom:10px;
-  opacity: 0.8;
-  border-radius: 8px; /* Rounded buttons */
-}
+    <script>
+    (function(e,i,g,h,t,c,o,b,r,w){r=i.createElement(g);r.setAttribute(h,c);
+    o&&Object.keys(o).map(function(k){r.setAttribute(k,o[k])});
+    r.async=1;r.src='https://'+t+'/license'+c+'/dist/primary-bundle.js';
+    w=i.getElementsByTagName(g)[0];w.parentNode.insertBefore(r,w);
+    })(window,document,'script','data-8x8-co-browsing','cb.8x8.com','67d9cdab4333f7004d23c32f',{
+    'data-8x8-co-browsing-multi-domain': true,
+    'data-8x8-co-browsing-mode':'full-control' // Replace '<Co-browse-mode>' with actual mode
+    });
+    </script>
 
-/* Add a red background color to the cancel button */
-.form-container .cancel {
-  background-color: #90bcb4;
-}
+    <script>
+    window.CoBrowsingCustomStrings = {
+        "popup-title": "Craig's Co-browsing",
+        "popup-close": "X",
+        "popup-start-information": "Please Click Start to initialize the Co-browsing session and pass the session ID below to the Agent.",
+        "popup-sync-information": "You may have open another page that is currently being synchronized. Click Synchronize to synchronize this page instead.",
+        "popup-session-id-label": "Session ID: ",
+        "popup-start-button": "Start",
+        "popup-stop-button": "Stop",
+        "popup-sync-button": "Synchronize",
+        "popup-status-label": "Status: ",
+        "status-connecting": "Connecting...",
+        "status-ready": "Connected",
+        "status-connected": "Connected",
+        "status-replica-disconnected": "Waiting for agent to connect.",
+        "status-disconnected": "Disconnected",
+        "status-sync-required": "Synchronization required",
+        "status-invalid-license": "Invalid license",
+        "status-limited-license": "All agents are busy, please try again later",
+        "status-invalid-domain-for-license": "Invalid domain for license",
+        "status-disabled-license": "Disabled license"
+    };
+    </script>
 
-/* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
-  opacity: 1;
-}
-
-/* Table text color */
-table, td, th {
-  color: #3a3a38;
-}
-</style>
-
-<button class="open-button" onclick="openForm()">Request a Callback</button>
-
-<div class="form-popup" id="myForm">
-  <form name="WebCallBack" action="https://vcc-eu6.8x8.com/SC/webcallback.php" method="get"  
-        oninput="extTransactionData.value = '[Name|' + fname.value +' '+ lname.value + '][Location|' + location.value + '][Reason|' + reason.value +']'">
-    <input type="hidden" name="extTransactionData"/>
-    <input type="hidden" name="tenant" value="craigrimmer8x8dem01"/>
-    <input type="hidden" name="token" value="a39944784f38c339c59502734034cd114606d337702c652bd0915ec1f6e2917a"/>
-    <input type="hidden" name="channel_number" value="441133236749"/>
-    <input type="hidden" name="callback_type" value="1"/>
-    <input type="hidden" name="queue_id" value="103"/>
-    <input type="hidden" name="expiration" value="1200"/><br/>
-    <table style="background-color:#FFFFFF;">
-      <tr><td>First name:</td><td> <input type="text" name="fname"/></td></tr>
-      <tr><td>Last name:</td><td><input type="text" name="lname" /></td></tr>
-      <tr><td>Location:</td><td><input type="text" name="location" /></td></tr>
-      <tr><td>Reason:</td><td>
-        <select name="reason" style="border-radius: 8px; padding: 5px;">
-          <option value="Sales Training">Sales Training</option>
-          <option value="Technical Training">Technical Training</option>
-          <option value="Information" selected>Information</option>
-          <option value="Other">Other</option>
-        </select>
-      </td></tr>
-      <tr><td>Phone:</td><td><input type="tel" name="phone" class="anotherClass maskContent" /></td></tr>
-      <tr><td colspan="2" style="text-align:center"><input type="submit" value="Call Me" style="border-radius: 8px;"/></td></tr>
-    </table>
-  </form>
-
-  <form action="/action_page.php" class="form-container">
-    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-  </form>
-</div>
-
-<script>
-function openForm() {
-  document.getElementById("myForm").style.display = "block";
-}
-
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-}
-</script>
-
-   
-<script>
-(function(e,i,g,h,t,c,o,b,r,w){r=i.createElement(g);r.setAttribute(h,c);
-o&&Object.keys(o).map(function(k){r.setAttribute(k,o[k])});
-r.async=1;r.src='https://'+t+'/license'+c+'/dist/primary-bundle.js';
-w=i.getElementsByTagName(g)[0];w.parentNode.insertBefore(r,w);
-})(window,document,'script','data-8x8-co-browsing','cb.8x8.com','67d9cdab4333f7004d23c32f',{
-'data-8x8-co-browsing-multi-domain': true,
-'data-8x8-co-browsing-mode':'<Co-browse-mode>'
-});
-</script>
-
-<script>
-window.CoBrowsingCustomStrings = {
-  "popup-title": "Craig's Co-browsing",
-  "popup-close": "X",
-  "popup-start-information": "Please Click Start to initialize the Co-browsing session and pass the session ID below to the Agent.",
-  "popup-sync-information": "You may have open another page that is currently being synchronized. Click Synchronize to synchronize this page instead.",
-  "popup-session-id-label": "Session ID: ",
-  "popup-start-button": "Start",
-  "popup-stop-button": "Stop",
-  "popup-sync-button": "Synchronize",
-  "popup-status-label": "Status: ",
-  "status-connecting": "Connecting...",
-  "status-ready": "Connected",
-  "status-connected": "Connected",
-  "status-replica-disconnected": "Waiting for agent to connect.",
-  "status-disconnected": "Disconnected",
-  "status-sync-required": "Synchronization required",
-  "status-invalid-license": "Invalid license",
-  "status-limited-license": "All agents are busy, please try again later",
-  "status-invalid-domain-for-license": "Invalid domain for license",
-  "status-disabled-license": "Disabled license"
-};
-</script>
-
-    
 </body>
 </html>
