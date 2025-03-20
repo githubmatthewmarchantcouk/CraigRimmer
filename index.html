@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Craigs 8x8 Demo</title>
+    <title>Full-Screen Image Dropper</title>
     <style>
         body {
             margin: 0;
@@ -39,12 +39,13 @@
             object-fit: contain; /* Ensure the image fits inside the screen */
             max-width: 100vw;
             max-height: 100vh;
-            z-index: 1;
+            z-index: 1; /* Lower z-index for images so that they stay behind buttons */
         }
+        /* Help Link */
         .help-link {
             position: absolute;
             top: 20px;
-            right: 20px;
+            left: 20px; /* Positioned to the top-left corner */
             color: white;
             font-size: 16px;
             text-decoration: none;
@@ -52,17 +53,19 @@
             background-color: rgba(0, 0, 0, 0.7);
             border-radius: 5px;
             transition: background-color 0.3s;
+            z-index: 1001; /* Higher z-index to be in front of image */
         }
         .help-link:hover {
             background-color: rgba(0, 0, 0, 0.9);
         }
+
         /* Style for the draggable chat button */
         #__8x8-chat-button-container-script_142418536967daddd3139067 {
-            position: fixed;
-            left: 20px; /* Button starts from the left side */
-            bottom: 20px;
+            position: absolute;
+            top: 20px; /* Positioned to the top */
+            right: 20px; /* Positioned to the top-right corner */
             cursor: move;
-            z-index: 1000;
+            z-index: 1001; /* Higher z-index to be in front of image */
             background-color: #0078d4;
             color: white;
             padding: 15px;
