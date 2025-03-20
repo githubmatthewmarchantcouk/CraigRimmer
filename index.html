@@ -58,6 +58,7 @@
 </div>
 
 <script>
+(function() {
     window.CoBrowsingCustomStrings = {
         "popup-title": "Craig's Co-browsing",
         "popup-close": "X",
@@ -79,21 +80,29 @@
         "status-invalid-domain-for-license": "Invalid domain for license",
         "status-disabled-license": "Disabled license"
     };
+})();
 </script>
 
 <script>
-    (function(e,i,g,h,t,c,o,b,r,w){r=i.createElement(g);r.setAttribute(h,c);
-    o&&Object.keys(o).map(function(k){r.setAttribute(k,o[k])});
-    r.async=1;r.src='https://'+t+'/license'+c+'/dist/primary-bundle.js';
-    w=i.getElementsByTagName(g)[0];w.parentNode.insertBefore(r,w);
+(function() {
+    (function(e,i,g,h,t,c,o,b,r,w) {
+        r=i.createElement(g);
+        r.setAttribute(h,c);
+        o&&Object.keys(o).map(function(k) { r.setAttribute(k,o[k]); });
+        r.async=1;
+        r.src='https://'+t+'/license'+c+'/dist/primary-bundle.js';
+        w=i.getElementsByTagName(g)[0];
+        w.parentNode.insertBefore(r,w);
     })(window,document,'script','data-8x8-co-browsing','cb.8x8.com','67d9cdab4333f7004d23c32f', {
         'data-8x8-co-browsing-multi-domain': true,
         'data-8x8-co-browsing-mode':'<Co-browse-mode>'
     });
+})();
 </script>
 
 <!-- Chat Button Script -->
 <script type="text/javascript">
+(function() {
     (function(c, f, ef){
         var typeofC = Object.prototype.toString.call(c);
         var props = (typeofC === '[object Object]' && c) || {};
@@ -139,7 +148,9 @@
             os.parentNode.insertBefore(se, os);
         }
     })();
+})();
 </script>
+
 
 <!-- for pop up button -->
 <style>
