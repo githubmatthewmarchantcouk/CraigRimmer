@@ -19,7 +19,6 @@
             justify-content: space-between;
             align-items: center;
             padding-left: 10px;
-            position: relative; /* Added to help align the chat button */
         }
         .top-border img {
             height: 100px;
@@ -31,131 +30,56 @@
             max-width: 100%;
             height: auto;
         }
-
-        /* Add specific styling for the chat button container */
-        #__8x8-chat-button-container-script_142418536967daddd3139067.73299394 {
-            position: absolute;
-            right: 10px;
-        }
     </style>
 </head>
 <body>
 <div class="top-border">
-    <div class="left-container">
-        <img src="toplhlogo.png" alt="Logo">
+        <div class="left-container">
+            <img src="toplhlogo.png" alt="Logo">
+        </div>
+        <a href="#" onclick="window.coBrowsingInstance && coBrowsingInstance.showPopup();return false;">
+            <img src="co-browse.gif" alt="Co-browse Icon" class="co-browse">
+        </a>
     </div>
-    <a href="#" onclick="window.coBrowsingInstance && coBrowsingInstance.showPopup();return false;">
-        <img src="co-browse.gif" alt="Co-browse Icon" class="co-browse">
-    </a>
+    <div class="image-container">
+        <img src="Pic2.PNG" alt="Pic2">
+        <img src="Pic3.PNG" alt="Pic3">
+    </div>
 
-    <!-- 8x8 Chat Button Container -->
-    <div id="__8x8-chat-button-container-script_142418536967daddd3139067.73299394"></div>
-</div>
-
-<div class="image-container">
-    <img src="Pic2.PNG" alt="Pic2">
-    <img src="Pic3.PNG" alt="Pic3">
-</div>
-
-<!-- Co-browsing Script -->
-<script defer src="path/to/co-browsing.js"></script>
-
-<!-- Chat Button Script -->
-<script defer src="path/to/chat-button.js"></script>
-
-<script>
-(function() {
+     <script>
     window.CoBrowsingCustomStrings = {
-        "popup-title": "Craig's Co-browsing",
-        "popup-close": "X",
-        "popup-start-information": "Please Click Start to initialize the Co-browsing session and pass the session ID below to the Agent.",
-        "popup-sync-information": "You may have open another page that is currently being synchronized. Click Synchronize to synchronize this page instead.",
-        "popup-session-id-label": "Session ID: ",
-        "popup-start-button": "Start",
-        "popup-stop-button": "Stop",
-        "popup-sync-button": "Synchronize",
-        "popup-status-label": "Status: ",
-        "status-connecting": "Connecting...",
-        "status-ready": "Connected",
-        "status-connected": "Connected",
-        "status-replica-disconnected": "Waiting for agent to connect.",
-        "status-disconnected": "Disconnected",
-        "status-sync-required": "Synchronization required",
-        "status-invalid-license": "Invalid license",
-        "status-limited-license": "All agents are busy, please try again later",
-        "status-invalid-domain-for-license": "Invalid domain for license",
-        "status-disabled-license": "Disabled license"
+      "popup-title": "Craig's Co-browsing",
+      "popup-close": "X",
+      "popup-start-information": "Please Click Start to initialize the Co-browsing session and pass the session ID below to the Agent.",
+      "popup-sync-information": "You may have open another page that is currently being synchronized. Click Synchronize to synchronize this page instead.",
+      "popup-session-id-label": "Session ID: ",
+      "popup-start-button": "Start",
+      "popup-stop-button": "Stop",
+      "popup-sync-button": "Synchronize",
+      "popup-status-label": "Status: ",
+      "status-connecting": "Connecting...",
+      "status-ready": "Connected",
+      "status-connected": "Connected",
+      "status-replica-disconnected": "Waiting for agent to connect.",
+      "status-disconnected": "Disconnected",
+      "status-sync-required": "Synchronization required",
+      "status-invalid-license": "Invalid license",
+      "status-limited-license": "All agents are busy, please try again later",
+      "status-invalid-domain-for-license": "Invalid domain for license",
+      "status-disabled-license": "Disabled license"
     };
-})();
-</script>
+    </script>
 
-<script>
-(function() {
-    (function(e,i,g,h,t,c,o,b,r,w) {
-        r=i.createElement(g);
-        r.setAttribute(h,c);
-        o&&Object.keys(o).map(function(k) { r.setAttribute(k,o[k]); });
-        r.async=1;
-        r.src='https://'+t+'/license'+c+'/dist/primary-bundle.js';
-        w=i.getElementsByTagName(g)[0];
-        w.parentNode.insertBefore(r,w);
-    })(window,document,'script','data-8x8-co-browsing','cb.8x8.com','67d9cdab4333f7004d23c32f', {
-        'data-8x8-co-browsing-multi-domain': true,
-        'data-8x8-co-browsing-mode':'<Co-browse-mode>'
+    <script>
+    (function(e,i,g,h,t,c,o,b,r,w){r=i.createElement(g);r.setAttribute(h,c);
+    o&&Object.keys(o).map(function(k){r.setAttribute(k,o[k])});
+    r.async=1;r.src='https://'+t+'/license'+c+'/dist/primary-bundle.js';
+    w=i.getElementsByTagName(g)[0];w.parentNode.insertBefore(r,w);
+    })(window,document,'script','data-8x8-co-browsing','cb.8x8.com','67d9cdab4333f7004d23c32f',{
+    'data-8x8-co-browsing-multi-domain': true,
+    'data-8x8-co-browsing-mode':'<Co-browse-mode>'
     });
-})();
-</script>
-
-<!-- Chat Button Script -->
-<script type="text/javascript">
-(function() {
-    (function(c, f, ef){
-        var typeofC = Object.prototype.toString.call(c);
-        var props = (typeofC === '[object Object]' && c) || {};
-        var cb = f || (typeofC === '[object Function]' && c);
-        var config = {
-            scriptUuid: "script_142418536967daddd3139067.73299394",
-            tenant: "Y3JhaWdyaW1tZXI4eDhkZW0wMQ",
-            channelName: "Craigs Chat",
-            channelUuid: "1Ky1MRnvTG2qV7Cj71dN7A",
-            domain: "https://vcc-eu6.8x8.com",
-            buttonContainerId: "__8x8-chat-button-container-script_142418536967daddd3139067.73299394",
-            align: "right",
-        };
-
-        var url = new URL("https://cloud8-cc-geo.8x8.com/vcc-chat-channels/public/webchat/discovery");
-        var params = { domain: config.domain, tenant: config.tenant, channelUuid: config.channelUuid };
-        url.search = new URLSearchParams(params).toString();
-        fetch(url)
-            .then(response => response.json())
-            .then(data => config.domain = !data.domain ? config.domain : data.domain)
-            .catch(error => console.warn('Failed to retrieve override domain, will continue using ', config.domain, error))
-            .finally(() => loadChat());
-
-        function loadChat() {
-            var se = document.createElement("script");
-            se.type = "text/javascript";
-            se.async = true;
-            se.src = props.loaderURL || (config.domain + "/CHAT/common/js/chatv3.js");
-            Object.keys(config).forEach(function (k) { se.dataset[k] = config[k] });
-            Object.keys(props).forEach(function (k) { se.dataset[k] = props[k] });
-            function handleInitEvent(e) {
-                var initFn = e.detail.init;
-                initFn(config, cb);
-                se.removeEventListener('init', handleInitEvent)
-            }
-            function handleErrorEvent(e) {
-                ef && ef(e);
-                se.removeEventListener('customerror', handleErrorEvent);
-            }
-            se.addEventListener('init', handleInitEvent);
-            se.addEventListener('customerror', handleErrorEvent);
-            var os = document.getElementsByTagName("script")[0];
-            os.parentNode.insertBefore(se, os);
-        }
-    })();
-})();
-</script>
+    </script>   
 
 <!-- for pop up button -->
 <style>
@@ -256,6 +180,8 @@ table, td, th {
   color: #3a3a38;
 }
 </style>
+</head>
+<body>
 
 <button class="open-button" onclick="openForm()">Request a Callback</button>
 
@@ -301,5 +227,7 @@ function closeForm() {
 }
 </script>
 
+    
+    
 </body>
 </html>
