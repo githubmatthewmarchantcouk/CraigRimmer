@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Craigs 8x8 Demo</title>
+    <title>Craig's 8x8 Demo</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            overflow: hidden;
             background-color: #f0f0f0;
             display: flex;
             flex-direction: column;
             height: 100vh;
+            overflow: auto; /* Allow scrolling on the body */
         }
         .drop-area {
             flex-grow: 1;
@@ -25,15 +25,16 @@
             transition: background-color 0.3s ease;
             position: relative;
             width: 100%;
-            overflow: hidden;
+            overflow: visible; /* Allow the image to overflow */
         }
         .drop-area.hover {
             background-color: rgba(0, 0, 0, 0.7);
         }
         .drop-area img {
-            width: 100%;
-            height: auto;
             position: absolute;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Maintain the image's aspect ratio */
         }
         #__8x8-chat-button-container-script_142418536967daddd3139067\.73299394 {
             position: absolute;
@@ -74,11 +75,9 @@
                     const img = document.createElement('img');
                     img.src = event.target.result;
                     img.onload = function() {
-                        const aspectRatio = img.naturalWidth / img.naturalHeight;
-                        area.style.height = (window.innerWidth / aspectRatio) + 'px';
+                        area.innerHTML = ''; // Clear previous content
+                        area.appendChild(img);
                     };
-                    area.innerHTML = '';
-                    area.appendChild(img);
                 };
                 reader.readAsDataURL(file);
             } else {
