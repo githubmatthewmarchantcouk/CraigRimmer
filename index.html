@@ -50,7 +50,7 @@
 <div class="drop-area" id="drop-area-2">Drop an image here</div>
 <div class="drop-area" id="drop-area-3">Drop an image here</div>
 
-<div id="__8x8-chat-button-container-script_142418536967daddd3139067.73299394" draggable="true">Chat</div>
+<div id="__8x8-chat-button-container-script_142418536967daddd3139067.73299394" draggable="true"></div>
 
 <script>
     document.querySelectorAll('.drop-area').forEach(area => {
@@ -87,5 +87,53 @@
         });
     });
 </script>
+<!-- This script will not interfere with the button layout, you just need to include it in the same page. It must also be within the <body> section of the page, preferably just before the ending tag. -->
+    <script type="text/javascript">
+    (function(c, f, ef){
+        var typeofC = Object.prototype.toString.call(c);
+        var props = (typeofC === '[object Object]' && c) || {};
+        var cb = f || (typeofC === '[object Function]' && c);
+        var config = {
+            scriptUuid: "script_142418536967daddd3139067.73299394",
+            tenant: "Y3JhaWdyaW1tZXI4eDhkZW0wMQ",
+            channelName: "Craigs Chat",
+            channelUuid: "1Ky1MRnvTG2qV7Cj71dN7A",
+            domain: "https://vcc-eu6.8x8.com",
+            buttonContainerId: "__8x8-chat-button-container-script_142418536967daddd3139067.73299394",
+            align: "right",
+        };
+
+        var url = new URL("https://cloud8-cc-geo.8x8.com/vcc-chat-channels/public/webchat/discovery");
+        var params = { domain: config.domain, tenant: config.tenant, channelUuid: config.channelUuid };
+        url.search = new URLSearchParams(params).toString();
+        fetch(url)
+            .then(response => response.json())
+            .then(data => config.domain = !data.domain ? config.domain : data.domain)
+            .catch(error => console.warn('Failed to retrieve override domain, will continue using ', config.domain, error))
+            .finally(() => loadChat());
+
+        function loadChat() {
+            var se = document.createElement("script");
+            se.type = "text/javascript";
+            se.async = true;
+            se.src = props.loaderURL || (config.domain + "/CHAT/common/js/chatv3.js");
+            Object.keys(config).forEach(function (k) { se.dataset[k] = config[k] });
+            Object.keys(props).forEach(function (k) { se.dataset[k] = props[k] });
+            function handleInitEvent(e) {
+                var initFn = e.detail.init;
+                initFn(config, cb);
+                se.removeEventListener('init', handleInitEvent)
+            }
+            function handleErrorEvent(e) {
+                ef && ef(e);
+                se.removeEventListener('customerror', handleErrorEvent);
+            }
+            se.addEventListener('init', handleInitEvent);
+            se.addEventListener('customerror', handleErrorEvent);
+            var os = document.getElementsByTagName("script")[0];
+            os.parentNode.insertBefore(se, os);
+        }
+    })();
+    </script>
 </body>
 </html>
