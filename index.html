@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Three-Area Image Dropper</title>
+    <title>Craigs 8x8 Demo</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            overflow: hidden;
             background-color: #f0f0f0;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            min-height: 100vh;
+            overflow-y: auto; /* Allow vertical scrolling */
         }
         .drop-area {
-            flex-grow: 1;
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -33,10 +33,11 @@
         .drop-area img {
             width: 100%;
             height: auto;
+            max-height: none;
             position: absolute;
         }
         #__8x8-chat-button-container-script_142418536967daddd3139067\.73299394 {
-            position: absolute;
+            position: fixed;
             top: 10px;
             left: 10px;
             cursor: grab;
@@ -75,7 +76,7 @@
                     img.src = event.target.result;
                     img.onload = function() {
                         const aspectRatio = img.naturalWidth / img.naturalHeight;
-                        area.style.height = (window.innerWidth / aspectRatio) + 'px';
+                        area.style.flex = aspectRatio;
                     };
                     area.innerHTML = '';
                     area.appendChild(img);
