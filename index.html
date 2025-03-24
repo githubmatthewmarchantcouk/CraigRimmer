@@ -3,137 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Craigs 8x8 Demo</title>
+    <title>Image Layout</title>
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            box-sizing: border-box;
+        }
+        body {
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-            overflow-y: auto; /* Allow vertical scrolling */
-        }
-        .drop-area {
-            display: flex;
-            justify-content: center;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #fff;
-            font-size: 20px;
-            transition: background-color 0.3s ease;
-            position: relative;
-            width: 100%;
-            min-height: 33vh; /* Ensure a minimum height for each area */
+            overflow-x: hidden;
         }
-        .drop-area.hover {
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-        .drop-area img {
-            width: 100%;
+        img {
+            width: 100vw;
             height: auto;
-            max-width: 100%;
-            max-height: 100%;
         }
-        #__8x8-chat-button-container-script_142418536967daddd3139067\.73299394 {
+        #chat-button {
             position: fixed;
             top: 10px;
-            left: 10px;
+            right: 10px;
             cursor: grab;
-            z-index: 9999; /* Ensure it's always on top */
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
+    <img src="toplhlogo.png" alt="Top Image">
+    <img src="Pic2.PNG" alt="Middle Image">
+    <img src="Pic3.PNG" alt="Bottom Image">
+    
+    <div id="chat-button" draggable="true">
+        <div id="__8x8-chat-button-container-script_142418536967daddd3139067.73299394"></div>
+    </div>
+    
+    <script>
+        const chatButton = document.getElementById("chat-button");
+        let offsetX, offsetY;
 
-<div class="drop-area" id="drop-area-1">Drop an image here</div>
-<div class="drop-area" id="drop-area-2">Drop an image here</div>
-<div class="drop-area" id="drop-area-3">Drop an image here</div>
+        chatButton.addEventListener("dragstart", (e) => {
+            offsetX = e.clientX - chatButton.getBoundingClientRect().left;
+            offsetY = e.clientY - chatButton.getBoundingClientRect().top;
+        });
 
-<div id="__8x8-chat-button-container-script_142418536967daddd3139067.73299394" draggable="true"></div>
-
-<script>
-    document.querySelectorAll('.drop-area').forEach(area => {
-        area.addEventListener('dragover', (e) => {
+        document.addEventListener("dragover", (e) => {
             e.preventDefault();
-            area.classList.add('hover');
         });
 
-        area.addEventListener('dragleave', () => {
-            area.classList.remove('hover');
-        });
-
-        area.addEventListener('drop', (e) => {
+        document.addEventListener("drop", (e) => {
             e.preventDefault();
-            area.classList.remove('hover');
-
-            const file = e.dataTransfer.files[0];
-            if (file && file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const img = document.createElement('img');
-                    img.src = event.target.result;
-                    img.onload = function() {
-                        const aspectRatio = img.naturalWidth / img.naturalHeight;
-                        area.style.height = (window.innerWidth / aspectRatio) + 'px';
-                    };
-                    area.innerHTML = '';
-                    area.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            } else {
-                alert('Please drop an image file');
-            }
+            chatButton.style.left = `${e.clientX - offsetX}px`;
+            chatButton.style.top = `${e.clientY - offsetY}px`;
         });
-    });
-</script>
-<!-- This script will not interfere with the button layout, you just need to include it in the same page. It must also be within the <body> section of the page, preferably just before the ending tag. -->
-    <script type="text/javascript">
-    (function(c, f, ef){
-        var typeofC = Object.prototype.toString.call(c);
-        var props = (typeofC === '[object Object]' && c) || {};
-        var cb = f || (typeofC === '[object Function]' && c);
-        var config = {
-            scriptUuid: "script_142418536967daddd3139067.73299394",
-            tenant: "Y3JhaWdyaW1tZXI4eDhkZW0wMQ",
-            channelName: "Craigs Chat",
-            channelUuid: "1Ky1MRnvTG2qV7Cj71dN7A",
-            domain: "https://vcc-eu6.8x8.com",
-            buttonContainerId: "__8x8-chat-button-container-script_142418536967daddd3139067.73299394",
-            align: "right",
-        };
-
-        var url = new URL("https://cloud8-cc-geo.8x8.com/vcc-chat-channels/public/webchat/discovery");
-        var params = { domain: config.domain, tenant: config.tenant, channelUuid: config.channelUuid };
-        url.search = new URLSearchParams(params).toString();
-        fetch(url)
-            .then(response => response.json())
-            .then(data => config.domain = !data.domain ? config.domain : data.domain)
-            .catch(error => console.warn('Failed to retrieve override domain, will continue using ', config.domain, error))
-            .finally(() => loadChat());
-
-        function loadChat() {
-            var se = document.createElement("script");
-            se.type = "text/javascript";
-            se.async = true;
-            se.src = props.loaderURL || (config.domain + "/CHAT/common/js/chatv3.js");
-            Object.keys(config).forEach(function (k) { se.dataset[k] = config[k] });
-            Object.keys(props).forEach(function (k) { se.dataset[k] = props[k] });
-            function handleInitEvent(e) {
-                var initFn = e.detail.init;
-                initFn(config, cb);
-                se.removeEventListener('init', handleInitEvent)
-            }
-            function handleErrorEvent(e) {
-                ef && ef(e);
-                se.removeEventListener('customerror', handleErrorEvent);
-            }
-            se.addEventListener('init', handleInitEvent);
-            se.addEventListener('customerror', handleErrorEvent);
-            var os = document.getElementsByTagName("script")[0];
-            os.parentNode.insertBefore(se, os);
-        }
-    })();
     </script>
 </body>
 </html>
