@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Craig's 8x8 Demo</title>
+    <title>Craigs 8x8 Demo</title>
     <style>
         * {
             margin: 0;
@@ -20,15 +20,19 @@
             width: 100vw;
             height: auto;
         }
-        #chat-button {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            cursor: grab;
-            z-index: 1000;
-            max-height: 100px;
-            width: auto;
-        }
+       #chat-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    cursor: grab;
+    z-index: 1000;
+    max-height: 100px;
+    width: 100px; /* Set an explicit width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
     </style>
 </head>
 <body>
