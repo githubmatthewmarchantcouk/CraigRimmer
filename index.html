@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Craigs 8x8 pop Demo</title>
+		<title>Craigs 8x8 Demo</title>
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<style>
         body {
@@ -110,14 +110,31 @@ b=i.getElementsByTagName(g)[0];b.parentNode.insertBefore(o,b);
 </script> 	
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const chatTrigger = document.getElementById("chat-hover-trigger");
+document.addEventListener("DOMContentLoaded", function () {
+  const repositionChat = () => {
+    const iframes = document.querySelectorAll("iframe");
 
-    chatTrigger.addEventListener("click", function () {
-      chatTrigger.classList.toggle("active");
-    });
+    for (let iframe of iframes) {
+      // You can identify the chat iframe by its src containing 'chat'
+      if (iframe.src.includes("chat") && !iframe.classList.contains("repositioned-8x8")) {
+        iframe.style.position = "fixed";
+        iframe.style.top = "20px";
+        iframe.style.left = "50%";
+        iframe.style.transform = "translateX(-50%)";
+        iframe.style.zIndex = "9999";
+        iframe.classList.add("repositioned-8x8"); // prevent double-styling
+      }
+    }
+  };
+
+  const observer = new MutationObserver(() => {
+    repositionChat();
   });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+});
 </script>
+
 	
 </body>
  
