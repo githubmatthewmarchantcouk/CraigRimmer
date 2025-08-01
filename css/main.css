@@ -117,14 +117,4 @@ body.popup .window-header {
   right: 0;
 }
 
-#chat-flyout {
-  position: absolute;
-  right: -200px; /* Hidden offscreen initially */
-  top: 0;
-  width: 200px;
-  transition: right 0.3s ease-in-out;
-  background-color: #f1f1f1;
-  border-radius: 10px 0 0 10px;
-  padding: 5px;
-  box-shadow: -3px 0 8px rgba(0,0,0,0.2);
-}
+
